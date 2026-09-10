@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Predict Campaign Outcome</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-4" style="max-width: 700px;">
+        <h2>Predict Campaign Outcome</h2>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-sm btn-outline-secondary mb-3">← Back to Dashboard</a>
+
+        {% if result %}
+        <div class="card p-3 mb-4 border-primary">
+            <h5>Prediction Result</h5>
+            <p><strong>Prediction:</strong>
+                <span class="{% if result.prediction == 'Convert' %}text-success{% else %}text-danger{% endif %}">
+                    {{ result.prediction }}
+                </span>
+            </p>
+            <p><strong>Conversion Probability:</strong> {{ result.probability }}%</p>
+            <div class="progress mt-2" style="height: 20px;">
+                <div class="progress-bar {% if result.prediction == 'Convert' %}bg-success{% else %}bg-danger{% endif %}"
+                     role="progressbar"
+                     style="width: {{ result.probability }}%;">
+                    {{ result.probability }}%
+                </div>
+            </div>
+            <p><strong>Expected Conversion Rate:</strong> {{ result.expected_rate }}</p>
+            <a href="{% url 'download_report' %}" class="btn btn-success mt-2">Download PDF Report</a>
+        </div>
+        {% endif %}
+
+        <form method="post" class="card p-3">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-2">
+                    <label>Age</label>
+                    <input type="number" name="age" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label>Income</label>
+                    <input type="number" name="income" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label>Gender</label>
+                    <select name="gender" class="form-control">
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label>Campaign Channel</label>
+                    <select name="channel" class="form-control">
+                        <option value="Email">Email</option>
+                        <option value="PPC">PPC</option>
+                        <option value="Referral">Referral</option>
+                        <option value="SEO">SEO</option>
+                        <option value="Social Media">Social Media</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label>Campaign Type</label>
+                    <select name="campaign_type" class="form-control">
+                        <option value="Awareness">Awareness</option>
+                        <option value="Consideration">Consideration</option>
+                        <option value="Conversion">Conversion</option>
+                        <option value="Retention">Retention</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label>Ad Spend ($)</label>
+                    <input type="number" step="0.01" name="adspend" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label>Click Through Rate (0-1)</label>
+                    <input type="number" step="0.01" name="ctr" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label>Website Visits</label>
+                    <input type="number" name="website_visits" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label>Pages Per Visit</label>
+                    <input type="number" step="0.01" name="pages_per_visit" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label>Time On Site</label>
+                    <input type="number" step="0.01" name="time_on_site" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label>Social Shares</label>
+                    <input type="number" name="social_shares" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label>Email Opens</label>
+                    <input type="number" name="email_opens" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label>Email Clicks</label>
+                    <input type="number" name="email_clicks" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label>Previous Purchases</label>
+                    <input type="number" name="previous_purchases" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label>Loyalty Points</label>
+                    <input type="number" name="loyalty_points" class="form-control" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3 w-100">Run Prediction</button>
+        </form>
+    </div>
+</body>
+</html>
