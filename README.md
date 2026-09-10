@@ -1,4 +1,4 @@
-# digital-marketing-campaign-analysis
+# Digital-Marketing-Campaign-Analysis
 Marketing Campaign Analytics
 
 An end-to-end marketing analytics platform that cleans campaign data, visualizes performance, trains machine learning models to predict customer conversion, generates downloadable reports, and serves everything through a role-gated web application.
